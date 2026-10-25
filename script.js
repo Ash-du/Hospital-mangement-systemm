@@ -136,7 +136,7 @@ function renderPatients() {
 
 function renderAppointments() {
   const table = document.getElementById('appointmentTableBody');
-  table.innerHTML = state.appointments.map((appointment) => `
+  table.innerHTML = state.appointments.length ? state.appointments.map((appointment) => `
     <tr>
       <td>${appointment.patient}</td>
       <td>${appointment.doctor}</td>
@@ -144,7 +144,7 @@ function renderAppointments() {
       <td>${appointment.time}</td>
       <td><span class="status-tag ${appointment.status === 'Confirmed' ? 'success' : 'warning'}">${appointment.status}</span></td>
     </tr>
-  `).join('');
+  `).join('') : '<tr><td colspan="5">No appointments scheduled.</td></tr>';
 }
 
 function renderBilling() {
