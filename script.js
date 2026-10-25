@@ -293,6 +293,42 @@ function renderAll() {
   renderStaff();
 }
 
+function downloadReport() {
+  const rows = [['Section', 'ID', 'Name or record', 'Details', 'Status']];
+  state.patients.forEach((patient) => rows.push([
+    'Patient', patient.id, patient.name, `${patient.department} - ${patient.doctor}`, patient.status
+  ]));
+  state.appointments.forEach((appointment) => rows.push([
+    'Appointment', appointment.id, appointment.patient, `${appointment.doctor} - ${appointment.date} ${appointment.time}`, appointment.status
+  ]));
+  state.billing.forEach((item) => rows.push([
+    'Billing', item.id, item.patient, `$${item.amount}`, item.status
+  ]));
+  state.labs.forEach((item) => rows.push([
+    'Lab', item.id, item.patient, `${item.test} - ${item.doctor} - ${item.result}`, item.status
+  ]));
+  state.pharmacy.forEach((item) => rows.push([
+    'Pharmacy', item.batch, item.name, `Stock: ${item.stock}; reorder at: ${item.reorder}`, item.status
+  ]));
+  state.staff.forEach((member) => rows.push([
+    'Staff', '', member.name, `${member.role} - ${member.shift}`, member.onDuty ? 'On duty' : 'Off duty'
+  ]));
+
+  const csv = rows.map((row) => row.map((value) => {
+    const text = String(value);
+    const safeText = /^[\t\r\n ]*[=+\-@]/.test(text) ? `'${text}` : text;
+    return `"${safeText.replace(/"/g, '""')}"`;
+  }).join(',')).join('\r\n');
+  const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `carecore-report-${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
 function bindEvents() {
   document.querySelectorAll('.nav-item').forEach((button) => {
     button.addEventListener('click', () => setActivePanel(button.dataset.target));
@@ -300,6 +336,7 @@ function bindEvents() {
 
   document.getElementById('patientForm').addEventListener('submit', addPatient);
   document.getElementById('appointmentForm').addEventListener('submit', addAppointment);
+  document.getElementById('generateReportBtn').addEventListener('click', downloadReport);
 
   document.getElementById('patientSearch').addEventListener('input', renderPatients);
 
