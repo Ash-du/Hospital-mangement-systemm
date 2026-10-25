@@ -138,7 +138,10 @@ function renderPatients() {
 
 function renderAppointments() {
   const table = document.getElementById('appointmentTableBody');
-  table.innerHTML = state.appointments.length ? state.appointments.map((appointment) => `
+  const appointments = [...state.appointments].sort((a, b) =>
+    `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`)
+  );
+  table.innerHTML = appointments.length ? appointments.map((appointment) => `
     <tr>
       <td>${appointment.patient}</td>
       <td>${appointment.doctor}</td>
