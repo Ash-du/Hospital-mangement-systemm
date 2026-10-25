@@ -123,7 +123,7 @@ function renderPatients() {
     patient.doctor.toLowerCase().includes(search)
   );
 
-  table.innerHTML = filtered.map((patient) => `
+  table.innerHTML = filtered.length ? filtered.map((patient) => `
     <tr>
       <td><strong>${patient.name}</strong><br><small>${patient.id}</small></td>
       <td>${patient.department}</td>
@@ -131,7 +131,7 @@ function renderPatients() {
       <td><span class="status-tag ${patient.status === 'Critical' ? 'danger' : patient.status === 'Discharged' ? 'success' : patient.status === 'Stable' ? 'info' : 'warning'}">${patient.status}</span></td>
       <td><button class="action-btn" data-patient="${patient.id}">Open</button></td>
     </tr>
-  `).join('');
+  `).join('') : '<tr><td colspan="5">No patients found.</td></tr>';
 }
 
 function renderAppointments() {
