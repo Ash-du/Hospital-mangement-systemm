@@ -6,7 +6,7 @@
     <title>CareCore | Hospital Management System</title>
     <meta
       name="description"
-      content="CareCore is a modern hospital management system for patient records, appointments, operations, billing, and care coordination."
+      content="CareCore is a modern hospital management system platform for patient care, operations, billing, diagnostics and digital workflow management."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -17,306 +17,440 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="topbar">
-      <div class="container nav">
-        <div class="brand-wrap">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand-block">
           <div class="brand-mark">C</div>
           <div>
             <div class="brand-name">CareCore</div>
-            <div class="brand-tag">Hospital Management</div>
+            <div class="brand-sub">Hospital OS</div>
           </div>
         </div>
 
-        <nav class="nav-links" aria-label="Main navigation">
-          <a href="#overview">Overview</a>
-          <a href="#solutions">Solutions</a>
-          <a href="#workflow">Workflow</a>
-          <a href="#team">Team</a>
-          <a href="#contact">Contact</a>
+        <nav class="sidebar-nav" aria-label="Main hospital sections">
+          <button class="nav-item active" data-target="dashboard">
+            <span>◫</span>
+            Dashboard
+          </button>
+          <button class="nav-item" data-target="patients">
+            <span>◌</span>
+            Patients
+          </button>
+          <button class="nav-item" data-target="appointments">
+            <span>◍</span>
+            Appointments
+          </button>
+          <button class="nav-item" data-target="billing">
+            <span>◐</span>
+            Billing
+          </button>
+          <button class="nav-item" data-target="labs">
+            <span>◒</span>
+            Labs
+          </button>
+          <button class="nav-item" data-target="pharmacy">
+            <span>◓</span>
+            Pharmacy
+          </button>
+          <button class="nav-item" data-target="staff">
+            <span>◎</span>
+            Staff
+          </button>
+          <button class="nav-item" data-target="reports">
+            <span>◔</span>
+            Reports
+          </button>
         </nav>
 
-        <a class="btn btn-primary" href="#contact">Book a demo</a>
-      </div>
-    </header>
-
-    <main>
-      <section class="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <span class="eyebrow">Built for modern care delivery</span>
-            <h1>Smarter hospital operations, better patient outcomes.</h1>
-            <p>
-              Bring clinical administration, patient workflows, scheduling, billing,
-              and reporting into one connected system designed for efficient care.
-            </p>
-
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#contact">Request a demo</a>
-              <a class="btn btn-secondary" href="#solutions">Explore features</a>
-            </div>
-
-            <div class="hero-metrics">
-              <div>
-                <strong>12k+</strong>
-                <span>Patients managed</span>
-              </div>
-              <div>
-                <strong>96%</strong>
-                <span>Patient satisfaction</span>
-              </div>
-              <div>
-                <strong>24/7</strong>
-                <span>Operational visibility</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="hero-panel" aria-label="Hospital dashboard preview">
-            <div class="panel-header">
-              <span>Operations overview</span>
-              <span class="status-pill">Live</span>
-            </div>
-
-            <div class="stats-grid">
-              <div class="mini-card accent">
-                <span class="label">Appointments</span>
-                <strong>428</strong>
-                <small>Today</small>
-              </div>
-              <div class="mini-card">
-                <span class="label">Discharges</span>
-                <strong>86</strong>
-                <small>Pending</small>
-              </div>
-              <div class="mini-card">
-                <span class="label">ER cases</span>
-                <strong>31</strong>
-                <small>Critical</small>
-              </div>
-              <div class="mini-card">
-                <span class="label">Revenue</span>
-                <strong>$84.6k</strong>
-                <small>This week</small>
-              </div>
-            </div>
-
-            <div class="chart-box">
-              <div class="chart-header">
-                <span>Patient flow</span>
-                <span>+18.4%</span>
-              </div>
-              <div class="bars" aria-hidden="true">
-                <span style="height: 45%"></span>
-                <span style="height: 60%"></span>
-                <span style="height: 52%"></span>
-                <span style="height: 70%"></span>
-                <span style="height: 82%"></span>
-                <span style="height: 90%"></span>
-                <span style="height: 76%"></span>
-              </div>
-            </div>
-          </div>
+        <div class="sidebar-card">
+          <p>System status</p>
+          <strong>All services online</strong>
+          <span>99.98% uptime</span>
         </div>
-      </section>
+      </aside>
 
-      <section class="overview" id="overview">
-        <div class="container">
-          <div class="section-heading">
-            <span class="eyebrow dark">Why clinics choose CareCore</span>
-            <h2>One platform for care coordination.</h2>
+      <main class="main-panel">
+        <header class="topbar">
+          <div class="search-box">
+            <span>⌕</span>
+            <input type="text" placeholder="Search patient, file, doctor, lab..." id="globalSearch" />
           </div>
 
-          <div class="overview-grid">
-            <article class="info-card">
-              <div class="icon">01</div>
-              <h3>Patient records</h3>
-              <p>
-                Secure digital records that keep demographics, history, treatment plans,
-                and clinical notes in one place.
-              </p>
-            </article>
-
-            <article class="info-card">
-              <div class="icon">02</div>
-              <h3>Smart scheduling</h3>
-              <p>
-                Eliminate bottlenecks with appointment routing, doctor availability alerts,
-                and automated reminders.
-              </p>
-            </article>
-
-            <article class="info-card">
-              <div class="icon">03</div>
-              <h3>Billing and finance</h3>
-              <p>
-                Manage invoices, insurance processing, payment tracking, and claims more accurately.
-              </p>
-            </article>
+          <div class="header-actions">
+            <div class="date-pill" id="liveDate">--</div>
+            <button class="icon-button" aria-label="Notifications">🔔</button>
+            <button class="icon-button" aria-label="Messages">✉</button>
+            <div class="user-pill">
+              <div class="avatar small">AB</div>
+              <div>
+                <strong>Admin</strong>
+                <small>Operations</small>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </header>
 
-      <section class="solutions" id="solutions">
-        <div class="container">
-          <div class="section-heading split">
+        <section class="panel active" id="dashboard">
+          <div class="page-header">
             <div>
-              <span class="eyebrow dark">Solutions</span>
-              <h2>Designed for every function in the hospital.</h2>
+              <span class="eyebrow">Live overview</span>
+              <h1>Hospital command center</h1>
             </div>
-            <p>
-              From front desk to specialists, every department can work from the same source of truth.
-            </p>
+            <button class="btn btn-primary">Generate report</button>
           </div>
 
-          <div class="solutions-grid">
-            <article class="solution-card">
-              <div class="solution-icon">🩺</div>
-              <h3>Clinical workflow</h3>
-              <p>Coordinate triage, visits, referrals, and follow-up care without delays.</p>
-            </article>
-
-            <article class="solution-card">
-              <div class="solution-icon">📋</div>
-              <h3>Records management</h3>
-              <p>Access patient history and treatment records in a single secure system.</p>
-            </article>
-
-            <article class="solution-card">
-              <div class="solution-icon">💊</div>
-              <h3>Pharmacy operations</h3>
-              <p>Monitor prescriptions, stock, dosage tracking, and medication schedules.</p>
-            </article>
-
-            <article class="solution-card">
-              <div class="solution-icon">🧪</div>
-              <h3>Lab and diagnostics</h3>
-              <p>Track lab orders, test progress, and results with reduced turnaround time.</p>
-            </article>
-
-            <article class="solution-card">
-              <div class="solution-icon">👩‍💼</div>
-              <h3>Staff coordination</h3>
-              <p>Assign roles, manage shifts, and align departments with clear visibility.</p>
-            </article>
-
-            <article class="solution-card">
-              <div class="solution-icon">📊</div>
-              <h3>Decision support</h3>
-              <p>Use operational data and KPIs to improve performance and patient care quality.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="workflow" id="workflow">
-        <div class="container">
-          <div class="section-heading">
-            <span class="eyebrow dark">How it works</span>
-            <h2>Built around the hospital journey.</h2>
-          </div>
-
-          <div class="timeline">
-            <div class="step">
-              <span class="step-number">1</span>
-              <div>
-                <h3>Register</h3>
-                <p>Capture patient details, insurance information, and referral history.</p>
+          <div class="stats-grid">
+            <article class="stat-card primary">
+              <div class="card-top">
+                <span>Total patients</span>
+                <span class="trend up">+12.4%</span>
               </div>
-            </div>
-
-            <div class="step">
-              <span class="step-number">2</span>
-              <div>
-                <h3>Schedule</h3>
-                <p>Match patients with the right departments, doctors, and appointment slots.</p>
-              </div>
-            </div>
-
-            <div class="step">
-              <span class="step-number">3</span>
-              <div>
-                <h3>Coordinate care</h3>
-                <p>Track treatment plans, notes, diagnostics, and treatment progress.</p>
-              </div>
-            </div>
-
-            <div class="step">
-              <span class="step-number">4</span>
-              <div>
-                <h3>Review and bill</h3>
-                <p>Finalize costs, claims, discharge summaries, and follow-up communication.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="team" id="team">
-        <div class="container">
-          <div class="section-heading">
-            <span class="eyebrow dark">Leadership</span>
-            <h2>Trusted by healthcare operators.</h2>
-          </div>
-
-          <div class="team-grid">
-            <article class="team-card">
-              <div class="avatar blue">DR</div>
-              <h3>Dr. Selam Bekele</h3>
-              <p>Medical Director</p>
+              <strong id="statPatients">0</strong>
+              <small>Across all departments</small>
             </article>
 
-            <article class="team-card">
-              <div class="avatar teal">AM</div>
-              <h3>Abel Mekonnen</h3>
-              <p>Operations Lead</p>
+            <article class="stat-card">
+              <div class="card-top">
+                <span>Admissions</span>
+                <span class="trend up">+8.1%</span>
+              </div>
+              <strong id="statAdmissions">0</strong>
+              <small>Current month</small>
             </article>
 
-            <article class="team-card">
-              <div class="avatar gold">RN</div>
-              <h3>Ruth Nebiyu</h3>
-              <p>Clinical Systems</p>
+            <article class="stat-card">
+              <div class="card-top">
+                <span>Pending billing</span>
+                <span class="trend down">-3.2%</span>
+              </div>
+              <strong id="statBilling">0</strong>
+              <small>Awaiting settlement</small>
+            </article>
+
+            <article class="stat-card">
+              <div class="card-top">
+                <span>Critical cases</span>
+                <span class="trend up">+5.6%</span>
+              </div>
+              <strong id="statCritical">0</strong>
+              <small>High-priority care</small>
             </article>
           </div>
-        </div>
-      </section>
 
-      <section class="cta" id="contact">
-        <div class="container cta-box">
-          <div>
-            <span class="eyebrow">Start your digital transformation</span>
-            <h2>Modernize your hospital operations.</h2>
+          <div class="row-grid two-col">
+            <article class="card">
+              <div class="card-head">
+                <h3>Capacity performance</h3>
+                <span class="chip">This week</span>
+              </div>
+
+              <div class="bars-chart" aria-label="Capacity performance chart">
+                <div class="bar-group"><span style="height: 38%"></span><label>Mon</label></div>
+                <div class="bar-group"><span style="height: 56%"></span><label>Tue</label></div>
+                <div class="bar-group"><span style="height: 48%"></span><label>Wed</label></div>
+                <div class="bar-group"><span style="height: 74%"></span><label>Thu</label></div>
+                <div class="bar-group"><span style="height: 85%"></span><label>Fri</label></div>
+                <div class="bar-group"><span style="height: 79%"></span><label>Sat</label></div>
+                <div class="bar-group"><span style="height: 90%"></span><label>Sun</label></div>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <h3>Resource mix</h3>
+                <span class="chip">Live</span>
+              </div>
+
+              <div class="donut-wrap">
+                <div class="donut">
+                  <strong>76%</strong>
+                </div>
+                <ul class="legend">
+                  <li><span class="dot blue"></span> Inpatient care</li>
+                  <li><span class="dot cyan"></span> Outpatient</li>
+                  <li><span class="dot gold"></span> Emergency</li>
+                  <li><span class="dot gray"></span> Recovery</li>
+                </ul>
+              </div>
+            </article>
           </div>
 
-          <form class="contact-form" id="contactForm">
-            <input type="text" id="name" placeholder="Your name" aria-label="Your name" />
-            <input type="email" id="email" placeholder="Email address" aria-label="Email address" />
-            <button type="submit" class="btn btn-primary">Request a demo</button>
-          </form>
-        </div>
-      </section>
-    </main>
+          <div class="row-grid three-col">
+            <article class="card">
+              <div class="card-head">
+                <h3>Patient queue</h3>
+                <span class="chip">12 waiting</span>
+              </div>
+              <div id="queueList" class="stack-list"></div>
+            </article>
 
-    <footer class="footer">
-      <div class="container footer-inner">
-        <div>
-          <div class="brand-wrap footer-brand">
-            <div class="brand-mark">C</div>
+            <article class="card">
+              <div class="card-head">
+                <h3>Recent activity</h3>
+                <span class="chip">Updated</span>
+              </div>
+              <div id="activityFeed" class="stack-list"></div>
+            </article>
+
+            <article class="card">
+              <div class="card-head">
+                <h3>Critical alerts</h3>
+                <span class="chip warning">4 active</span>
+              </div>
+              <div id="alertFeed" class="stack-list"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel" id="patients">
+          <div class="page-header">
             <div>
-              <div class="brand-name">CareCore</div>
+              <span class="eyebrow">Patient registry</span>
+              <h2>Patient management</h2>
+            </div>
+            <button class="btn btn-primary" id="newPatientBtn">Add patient</button>
+          </div>
+
+          <div class="card panel-form">
+            <form id="patientForm">
+              <div class="form-grid">
+                <label>
+                  <span>Full name</span>
+                  <input type="text" name="name" placeholder="e.g. Hanna Kebede" required />
+                </label>
+                <label>
+                  <span>Department</span>
+                  <input type="text" name="department" placeholder="Cardiology" required />
+                </label>
+                <label>
+                  <span>Doctor</span>
+                  <input type="text" name="doctor" placeholder="Dr. Samuel" required />
+                </label>
+                <label>
+                  <span>Status</span>
+                  <select name="status">
+                    <option>In treatment</option>
+                    <option>Stable</option>
+                    <option>Discharged</option>
+                    <option>Critical</option>
+                  </select>
+                </label>
+              </div>
+              <button class="btn btn-primary" type="submit">Save patient</button>
+            </form>
+          </div>
+
+          <div class="card table-card">
+            <div class="toolbar">
+              <input type="text" id="patientSearch" placeholder="Filter patients..." />
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Patient</th>
+                    <th>Department</th>
+                    <th>Doctor</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="patientTableBody"></tbody>
+              </table>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div class="footer-links">
-          <a href="#overview">Overview</a>
-          <a href="#solutions">Solutions</a>
-          <a href="#workflow">Workflow</a>
-          <a href="#contact">Contact</a>
-        </div>
+        <section class="panel" id="appointments">
+          <div class="page-header">
+            <div>
+              <span class="eyebrow">Scheduling</span>
+              <h2>Appointments</h2>
+            </div>
+          </div>
 
-        <div class="copyright">© <span id="year"></span> CareCore</div>
-      </div>
-    </footer>
+          <div class="card panel-form">
+            <form id="appointmentForm">
+              <div class="form-grid">
+                <label>
+                  <span>Patient</span>
+                  <input type="text" name="patient" placeholder="Patient name" required />
+                </label>
+                <label>
+                  <span>Doctor</span>
+                  <input type="text" name="doctor" placeholder="Doctor name" required />
+                </label>
+                <label>
+                  <span>Date</span>
+                  <input type="date" name="date" required />
+                </label>
+                <label>
+                  <span>Time</span>
+                  <input type="time" name="time" required />
+                </label>
+              </div>
+              <button class="btn btn-primary" type="submit">Schedule visit</button>
+            </form>
+          </div>
+
+          <div class="card table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Doctor</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="appointmentTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" id="billing">
+          <div class="page-header">
+            <div>
+              <span class="eyebrow">Finance</span>
+              <h2>Billing & invoicing</h2>
+            </div>
+          </div>
+
+          <div class="card billing-summary">
+            <div>
+              <span>Outstanding</span>
+              <strong id="totalOutstanding">$0</strong>
+            </div>
+            <div>
+              <span>Collected</span>
+              <strong id="totalCollected">$0</strong>
+            </div>
+            <div>
+              <span>Pending claims</span>
+              <strong id="totalPending">0</strong>
+            </div>
+          </div>
+
+          <div class="card table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Invoice</th>
+                  <th>Patient</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="billingTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" id="labs">
+          <div class="page-header">
+            <div>
+              <span class="eyebrow">Diagnostics</span>
+              <h2>Laboratory tracking</h2>
+            </div>
+          </div>
+
+          <div class="card table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Test</th>
+                  <th>Doctor</th>
+                  <th>Status</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody id="labTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" id="pharmacy">
+          <div class="page-header">
+            <div>
+              <span class="eyebrow">Medication</span>
+              <h2>Pharmacy inventory</h2>
+            </div>
+          </div>
+
+          <div class="card table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Medicine</th>
+                  <th>Batch</th>
+                  <th>Stock</th>
+                  <th>Reorder at</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="pharmacyTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" id="staff">
+          <div class="page-header">
+            <div>
+              <span class="eyebrow">People</span>
+              <h2>Clinical staff</h2>
+            </div>
+          </div>
+
+          <div class="card table-card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Role</th>
+                  <th>Shift</th>
+                  <th>On duty</th>
+                </tr>
+              </thead>
+              <tbody id="staffTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="panel" id="reports">
+          <div class="page-header">
+            <div>
+              <span class="eyebrow">Insights</span>
+              <h2>Operational reports</h2>
+            </div>
+          </div>
+
+          <div class="report-grid">
+            <article class="card report-card">
+              <span>Admission rate</span>
+              <strong>91.2%</strong>
+              <small>12% above target</small>
+            </article>
+            <article class="card report-card">
+              <span>Average stay</span>
+              <strong>4.6 days</strong>
+              <small>Improved by 0.8 days</small>
+            </article>
+            <article class="card report-card">
+              <span>Patient satisfaction</span>
+              <strong>96.4%</strong>
+              <small>Best in region</small>
+            </article>
+            <article class="card report-card">
+              <span>Medication accuracy</span>
+              <strong>99.1%</strong>
+              <small>Zero critical variance</small>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
 
     <script src="script.js"></script>
   </body>
