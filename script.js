@@ -54,6 +54,14 @@ function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
+function createUniqueId(prefix, records) {
+  let id;
+  do {
+    id = `${prefix}${Math.floor(Math.random() * 9000 + 1000)}`;
+  } while (records.some((record) => record.id === id));
+  return id;
+}
+
 function updateDate() {
   const el = document.getElementById('liveDate');
   if (!el) return;
@@ -225,7 +233,7 @@ function addPatient(event) {
   const form = event.currentTarget;
   const formData = new FormData(form);
   const patient = {
-    id: `PT-${Math.floor(Math.random() * 9000 + 1000)}`,
+    id: createUniqueId('PT-', state.patients),
     name: formData.get('name').toString().trim(),
     department: formData.get('department').toString().trim(),
     doctor: formData.get('doctor').toString().trim(),
@@ -245,7 +253,7 @@ function addAppointment(event) {
   const form = event.currentTarget;
   const formData = new FormData(form);
   const appointment = {
-    id: `APT-${Math.floor(Math.random() * 9000 + 1000)}`,
+    id: createUniqueId('APT-', state.appointments),
     patient: formData.get('patient').toString().trim(),
     doctor: formData.get('doctor').toString().trim(),
     date: formData.get('date').toString(),
