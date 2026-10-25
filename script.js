@@ -118,9 +118,11 @@ function renderPatients() {
   const search = document.getElementById('patientSearch')?.value.trim().toLowerCase() || '';
 
   const filtered = state.patients.filter((patient) =>
+    patient.id.toLowerCase().includes(search) ||
     patient.name.toLowerCase().includes(search) ||
     patient.department.toLowerCase().includes(search) ||
-    patient.doctor.toLowerCase().includes(search)
+    patient.doctor.toLowerCase().includes(search) ||
+    patient.status.toLowerCase().includes(search)
   );
 
   table.innerHTML = filtered.length ? filtered.map((patient) => `
