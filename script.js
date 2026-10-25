@@ -170,14 +170,14 @@ function renderAppointments() {
 
 function renderBilling() {
   const table = document.getElementById('billingTableBody');
-  table.innerHTML = state.billing.map((item) => `
+  table.innerHTML = state.billing.length ? state.billing.map((item) => `
     <tr>
       <td>${item.id}</td>
       <td>${item.patient}</td>
       <td>$${item.amount.toLocaleString()}</td>
       <td><span class="status-tag ${item.status === 'Paid' ? 'success' : 'warning'}">${item.status}</span></td>
     </tr>
-  `).join('');
+  `).join('') : '<tr><td colspan="4">No billing records available.</td></tr>';
 
   const totalOutstanding = state.billing.filter(item => item.status !== 'Paid').reduce((sum, item) => sum + item.amount, 0);
   const totalCollected = state.billing.filter(item => item.status === 'Paid').reduce((sum, item) => sum + item.amount, 0);
@@ -190,7 +190,7 @@ function renderBilling() {
 
 function renderLabs() {
   const table = document.getElementById('labTableBody');
-  table.innerHTML = state.labs.map((item) => `
+  table.innerHTML = state.labs.length ? state.labs.map((item) => `
     <tr>
       <td>${item.patient}</td>
       <td>${item.test}</td>
@@ -198,12 +198,12 @@ function renderLabs() {
       <td><span class="status-tag ${item.status === 'Completed' ? 'success' : 'info'}">${item.status}</span></td>
       <td>${item.result}</td>
     </tr>
-  `).join('');
+  `).join('') : '<tr><td colspan="5">No lab records available.</td></tr>';
 }
 
 function renderPharmacy() {
   const table = document.getElementById('pharmacyTableBody');
-  table.innerHTML = state.pharmacy.map((item) => `
+  table.innerHTML = state.pharmacy.length ? state.pharmacy.map((item) => `
     <tr>
       <td>${item.name}</td>
       <td>${item.batch}</td>
@@ -211,19 +211,19 @@ function renderPharmacy() {
       <td>${item.reorder}</td>
       <td><span class="status-tag ${item.status === 'Critical' ? 'danger' : item.status === 'Low' ? 'warning' : 'success'}">${item.status}</span></td>
     </tr>
-  `).join('');
+  `).join('') : '<tr><td colspan="5">No pharmacy inventory available.</td></tr>';
 }
 
 function renderStaff() {
   const table = document.getElementById('staffTableBody');
-  table.innerHTML = state.staff.map((member) => `
+  table.innerHTML = state.staff.length ? state.staff.map((member) => `
     <tr>
       <td>${member.name}</td>
       <td>${member.role}</td>
       <td>${member.shift}</td>
       <td><span class="status-tag ${member.onDuty ? 'success' : 'warning'}">${member.onDuty ? 'On duty' : 'Off duty'}</span></td>
     </tr>
-  `).join('');
+  `).join('') : '<tr><td colspan="4">No staff records available.</td></tr>';
 }
 
 function setActivePanel(target) {
