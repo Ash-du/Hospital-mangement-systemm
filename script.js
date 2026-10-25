@@ -73,6 +73,14 @@ function updateDate() {
   });
 }
 
+function setAppointmentDateMinimum() {
+  const dateInput = document.getElementById('appointmentDate');
+  if (!dateInput) return;
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  dateInput.min = now.toISOString().slice(0, 10);
+}
+
 function renderDashboard() {
   document.getElementById('statPatients').textContent = state.patients.length;
   document.getElementById('statAdmissions').textContent = state.patients.filter(p => p.status !== 'Discharged').length + 14;
@@ -321,6 +329,7 @@ function bindEvents() {
 }
 
 updateDate();
+setAppointmentDateMinimum();
 renderAll();
 bindEvents();
 
