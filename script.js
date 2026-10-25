@@ -228,7 +228,13 @@ function renderStaff() {
 
 function setActivePanel(target) {
   document.querySelectorAll('.nav-item').forEach((button) => {
-    button.classList.toggle('active', button.dataset.target === target);
+    const isActive = button.dataset.target === target;
+    button.classList.toggle('active', isActive);
+    if (isActive) {
+      button.setAttribute('aria-current', 'page');
+    } else {
+      button.removeAttribute('aria-current');
+    }
   });
 
   document.querySelectorAll('.panel').forEach((panel) => {
