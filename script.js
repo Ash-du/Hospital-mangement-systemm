@@ -54,6 +54,17 @@ function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
+function escapeHTML(value) {
+  const characters = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  };
+  return String(value ?? '').replace(/[&<>"']/g, character => characters[character]);
+}
+
 function updateDate() {
   const el = document.getElementById('liveDate');
   if (!el) return;
@@ -75,10 +86,10 @@ function renderDashboard() {
   queueList.innerHTML = state.patients.slice(0, 4).map((patient) => `
     <div class="list-item">
       <div class="list-meta">
-        <strong>${patient.name}</strong>
-        <small>${patient.department}</small>
+        <strong>${escapeHTML(patient.name)}</strong>
+        <small>${escapeHTML(patient.department)}</small>
       </div>
-      <span class="status-tag ${patient.status === 'Critical' ? 'danger' : patient.status === 'In treatment' ? 'warning' : 'info'}">${patient.status}</span>
+      <span class="status-tag ${patient.status === 'Critical' ? 'danger' : patient.status === 'In treatment' ? 'warning' : 'info'}">${escapeHTML(patient.status)}</span>
     </div>
   `).join('');
 
@@ -123,38 +134,44 @@ function renderPatients() {
     patient.doctor.toLowerCase().includes(search)
   );
 
-  table.innerHTML = filtered.map((patient) => `
+  table.innerHTML = filtered.length ? filtered.map((patient) => `
     <tr>
-      <td><strong>${patient.name}</strong><br><small>${patient.id}</small></td>
-      <td>${patient.department}</td>
-      <td>${patient.doctor}</td>
-      <td><span class="status-tag ${patient.status === 'Critical' ? 'danger' : patient.status === 'Discharged' ? 'success' : patient.status === 'Stable' ? 'info' : 'warning'}">${patient.status}</span></td>
-      <td><button class="action-btn" data-patient="${patient.id}">Open</button></td>
+      <td><strong>${escapeHTML(patient.name)}</strong><br><small>${escapeHTML(patient.id)}</small></td>
+      <td>${escapeHTML(patient.department)}</td>
+      <td>${escapeHTML(patient.doctor)}</td>
+      <td><span class="status-tag ${patient.status === 'Critical' ? 'danger' : patient.status === 'Discharged' ? 'success' : patient.status === 'Stable' ? 'info' : 'warning'}">${escapeHTML(patient.status)}</span></td>
+      <td><button class="action-btn" data-patient="${escapeHTML(patient.id)}">Open</button></td>
     </tr>
-  `).join('');
+  `).join('') : '<tr><td colspan="5">No matching patients found.</td></tr>';
 }
 
-function renderAppointments() {
+function renderAppointments(search = '') {
   const table = document.getElementById('appointmentTableBody');
-  table.innerHTML = state.appointments.map((appointment) => `
+  const normalizedSearch = search.trim().toLowerCase();
+  const filtered = state.appointments.filter((appointment) =>
+    `${appointment.patient} ${appointment.doctor} ${appointment.date} ${appointment.time} ${appointment.id}`
+      .toLowerCase().includes(normalizedSearch)
+  );
+
+  table.innerHTML = filtered.length ? filtered.map((appointment) => `
     <tr>
-      <td>${appointment.patient}</td>
-      <td>${appointment.doctor}</td>
-      <td>${appointment.date}</td>
-      <td>${appointment.time}</td>
-      <td><span class="status-tag ${appointment.status === 'Confirmed' ? 'success' : 'warning'}">${appointment.status}</span></td>
+      <td>${escapeHTML(appointment.patient)}</td>
+      <td>${escapeHTML(appointment.doctor)}</td>
+      <td>${escapeHTML(appointment.date)}</td>
+      <td>${escapeHTML(appointment.time)}</td>
+      <td><span class="status-tag ${appointment.status === 'Confirmed' ? 'success' : 'warning'}">${escapeHTML(appointment.status)}</span></td>
     </tr>
-  `).join('');
+  `).join('') : '<tr><td colspan="5">No matching appointments found.</td></tr>';
 }
 
 function renderBilling() {
   const table = document.getElementById('billingTableBody');
   table.innerHTML = state.billing.map((item) => `
     <tr>
-      <td>${item.id}</td>
-      <td>${item.patient}</td>
+      <td>${escapeHTML(item.id)}</td>
+      <td>${escapeHTML(item.patient)}</td>
       <td>$${item.amount.toLocaleString()}</td>
-      <td><span class="status-tag ${item.status === 'Paid' ? 'success' : 'warning'}">${item.status}</span></td>
+      <td><span class="status-tag ${item.status === 'Paid' ? 'success' : 'warning'}">${escapeHTML(item.status)}</span></td>
     </tr>
   `).join('');
 
@@ -171,11 +188,11 @@ function renderLabs() {
   const table = document.getElementById('labTableBody');
   table.innerHTML = state.labs.map((item) => `
     <tr>
-      <td>${item.patient}</td>
-      <td>${item.test}</td>
-      <td>${item.doctor}</td>
-      <td><span class="status-tag ${item.status === 'Completed' ? 'success' : 'info'}">${item.status}</span></td>
-      <td>${item.result}</td>
+      <td>${escapeHTML(item.patient)}</td>
+      <td>${escapeHTML(item.test)}</td>
+      <td>${escapeHTML(item.doctor)}</td>
+      <td><span class="status-tag ${item.status === 'Completed' ? 'success' : 'info'}">${escapeHTML(item.status)}</span></td>
+      <td>${escapeHTML(item.result)}</td>
     </tr>
   `).join('');
 }
@@ -184,11 +201,11 @@ function renderPharmacy() {
   const table = document.getElementById('pharmacyTableBody');
   table.innerHTML = state.pharmacy.map((item) => `
     <tr>
-      <td>${item.name}</td>
-      <td>${item.batch}</td>
-      <td>${item.stock}</td>
-      <td>${item.reorder}</td>
-      <td><span class="status-tag ${item.status === 'Critical' ? 'danger' : item.status === 'Low' ? 'warning' : 'success'}">${item.status}</span></td>
+      <td>${escapeHTML(item.name)}</td>
+      <td>${escapeHTML(item.batch)}</td>
+      <td>${escapeHTML(item.stock)}</td>
+      <td>${escapeHTML(item.reorder)}</td>
+      <td><span class="status-tag ${item.status === 'Critical' ? 'danger' : item.status === 'Low' ? 'warning' : 'success'}">${escapeHTML(item.status)}</span></td>
     </tr>
   `).join('');
 }
@@ -197,9 +214,9 @@ function renderStaff() {
   const table = document.getElementById('staffTableBody');
   table.innerHTML = state.staff.map((member) => `
     <tr>
-      <td>${member.name}</td>
-      <td>${member.role}</td>
-      <td>${member.shift}</td>
+      <td>${escapeHTML(member.name)}</td>
+      <td>${escapeHTML(member.role)}</td>
+      <td>${escapeHTML(member.shift)}</td>
       <td><span class="status-tag ${member.onDuty ? 'success' : 'warning'}">${member.onDuty ? 'On duty' : 'Off duty'}</span></td>
     </tr>
   `).join('');
@@ -268,7 +285,12 @@ function renderAll() {
 
 function bindEvents() {
   document.querySelectorAll('.nav-item').forEach((button) => {
-    button.addEventListener('click', () => setActivePanel(button.dataset.target));
+    button.addEventListener('click', () => {
+      document.getElementById('globalSearch').value = '';
+      document.getElementById('patientSearch').value = '';
+      renderAll();
+      setActivePanel(button.dataset.target);
+    });
   });
 
   document.getElementById('patientForm').addEventListener('submit', addPatient);
@@ -283,27 +305,41 @@ function bindEvents() {
 
   document.getElementById('globalSearch').addEventListener('input', (event) => {
     const value = event.target.value.trim().toLowerCase();
+    const patientSearch = document.getElementById('patientSearch');
     if (!value) {
+      patientSearch.value = '';
       renderAll();
+      setActivePanel('dashboard');
       return;
     }
 
-    const matches = [
-      ...state.patients.filter(item => `${item.name} ${item.department} ${item.doctor}`.toLowerCase().includes(value)),
-      ...state.appointments.filter(item => `${item.patient} ${item.doctor}`.toLowerCase().includes(value))
-    ];
+    const patientMatches = state.patients.some((item) =>
+      `${item.name} ${item.department} ${item.doctor}`.toLowerCase().includes(value)
+    );
+    const appointmentMatches = state.appointments.some((item) =>
+      `${item.patient} ${item.doctor} ${item.date} ${item.time} ${item.id}`.toLowerCase().includes(value)
+    );
 
-    document.getElementById('patientTableBody').innerHTML = matches.length
-      ? matches.map((item) => `
-          <tr>
-            <td>${item.name || item.patient}</td>
-            <td>${item.department || item.doctor}</td>
-            <td>${item.doctor || item.date}</td>
-            <td><span class="status-tag info">Match</span></td>
-            <td><button class="action-btn">Open</button></td>
-          </tr>
-        `).join('')
-      : '<tr><td colspan="5">No matching records found</td></tr>';
+    if (patientMatches || !appointmentMatches) {
+      patientSearch.value = value;
+      renderPatients();
+      setActivePanel('patients');
+      return;
+    }
+
+    patientSearch.value = '';
+    renderAppointments(value);
+    setActivePanel('appointments');
+  });
+
+  const luxuryToggle = document.getElementById('luxuryThemeToggle');
+  const luxuryEnabled = localStorage.getItem('carecoreExecutiveTheme') === 'true';
+  document.body.classList.toggle('luxury-theme', luxuryEnabled);
+  luxuryToggle.setAttribute('aria-pressed', String(luxuryEnabled));
+  luxuryToggle.addEventListener('click', () => {
+    const enabled = document.body.classList.toggle('luxury-theme');
+    localStorage.setItem('carecoreExecutiveTheme', String(enabled));
+    luxuryToggle.setAttribute('aria-pressed', String(enabled));
   });
 }
 
